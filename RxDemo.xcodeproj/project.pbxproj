@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		25B96BD01F6268F2002360BD /* CocoaTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B96BCF1F6268F2002360BD /* CocoaTestViewController.swift */; };
+		25B96BD21F626E3B002360BD /* GitHubUserSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B96BD11F626E3B002360BD /* GitHubUserSearchViewController.swift */; };
 		25C9863E1F5CE20D00413A03 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C9863D1F5CE20D00413A03 /* AppDelegate.swift */; };
 		25C986431F5CE20D00413A03 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25C986411F5CE20D00413A03 /* Main.storyboard */; };
 		25C986451F5CE20D00413A03 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25C986441F5CE20D00413A03 /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		25B96BCF1F6268F2002360BD /* CocoaTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CocoaTestViewController.swift; sourceTree = "<group>"; };
+		25B96BD11F626E3B002360BD /* GitHubUserSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubUserSearchViewController.swift; sourceTree = "<group>"; };
 		25C9863A1F5CE20D00413A03 /* RxDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25C9863D1F5CE20D00413A03 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25C986421F5CE20D00413A03 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 				25C986541F5CF85600413A03 /* ZipViewController.swift */,
 				25C986561F5D011900413A03 /* CombineLatestViewController.swift */,
 				25B96BCF1F6268F2002360BD /* CocoaTestViewController.swift */,
+				25B96BD11F626E3B002360BD /* GitHubUserSearchViewController.swift */,
 			);
 			path = RxDemo;
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 				25B96BD01F6268F2002360BD /* CocoaTestViewController.swift in Sources */,
 				25C986551F5CF85600413A03 /* ZipViewController.swift in Sources */,
 				25C986531F5CF33F00413A03 /* MergeViewController.swift in Sources */,
+				25B96BD21F626E3B002360BD /* GitHubUserSearchViewController.swift in Sources */,
 				25C9863E1F5CE20D00413A03 /* AppDelegate.swift in Sources */,
 				25C986571F5D011900413A03 /* CombineLatestViewController.swift in Sources */,
 				25C986501F5CE46600413A03 /* BasicViewController.swift in Sources */,

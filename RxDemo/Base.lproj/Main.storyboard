@@ -394,7 +394,7 @@
         <!--Git Hub User Search-->
         <scene sceneID="gUX-hl-pPF">
             <objects>
-                <viewController title="Git Hub User Search" id="dYI-uT-3fG" sceneMemberID="viewController">
+                <viewController title="Git Hub User Search" id="dYI-uT-3fG" customClass="GitHubUserSearchViewController" customModule="RxDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GJQ-HI-mi6"/>
                         <viewControllerLayoutGuide type="bottom" id="MfQ-h7-Bhr"/>
@@ -402,8 +402,57 @@
                     <view key="view" contentMode="scaleToFill" id="PLU-vd-aKI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="pDT-g6-hrc">
+                                <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="s5T-1A-nUy">
+                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" textLabel="ebE-gw-flv" detailTextLabel="8qG-Un-fxM" style="IBUITableViewCellStyleSubtitle" id="R3O-Dz-tm4">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="R3O-Dz-tm4" id="RxL-ED-iJq">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ebE-gw-flv">
+                                                    <rect key="frame" x="15" y="5" width="33.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8qG-Un-fxM">
+                                                    <rect key="frame" x="15" y="25.5" width="44" height="14.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="pDT-g6-hrc" firstAttribute="centerX" secondItem="PLU-vd-aKI" secondAttribute="centerX" id="31i-64-HJc"/>
+                            <constraint firstItem="s5T-1A-nUy" firstAttribute="width" secondItem="PLU-vd-aKI" secondAttribute="width" id="4fW-ZY-Ng5"/>
+                            <constraint firstItem="s5T-1A-nUy" firstAttribute="centerX" secondItem="PLU-vd-aKI" secondAttribute="centerX" id="8CM-dF-lN6"/>
+                            <constraint firstItem="pDT-g6-hrc" firstAttribute="top" secondItem="GJQ-HI-mi6" secondAttribute="bottom" id="H3Y-TA-qI9"/>
+                            <constraint firstItem="MfQ-h7-Bhr" firstAttribute="top" secondItem="s5T-1A-nUy" secondAttribute="bottom" id="ZbW-8z-eY4"/>
+                            <constraint firstItem="s5T-1A-nUy" firstAttribute="top" secondItem="pDT-g6-hrc" secondAttribute="bottom" id="bpI-yb-GBB"/>
+                            <constraint firstItem="pDT-g6-hrc" firstAttribute="width" secondItem="PLU-vd-aKI" secondAttribute="width" id="cBV-eJ-j1N"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="searchBar" destination="pDT-g6-hrc" id="aYw-w6-w8s"/>
+                        <outlet property="tableView" destination="s5T-1A-nUy" id="yQe-Nd-Ye5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8gp-lm-PRf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -21,7 +21,7 @@ class CocoaTestViewController: UIViewController {
     @IBOutlet weak var button: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.button.rx.controlEvent(UIControlEvents.touchUpInside).subscribe(onNext: { () in
+        self.button.rx.tap.subscribe(onNext: { () in
           print("button clicked")
         }).disposed(by: disposeBag)
         NotificationCenter.default.rx.notification(.TestNotificationName).subscribe(onNext: { (notify) in
