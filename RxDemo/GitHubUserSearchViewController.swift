@@ -10,8 +10,57 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+protocol URLRequestCovertable {
+    var request: URLRequest {get}
+}
+extension URLRequest: URLRequestCovertable{
+    var request: URLRequest { return self }
+}
+extension URL: URLRequestCovertable {
+    var request: URLRequest{
+        return URLRequest(url: self)
+    }
+}
+extension String: URLRequestCovertable {
+    var request: URLRequest {
+        guard let url = URL(string: self) else {
+            fatalError("cannot convert \(self) to valid URL")
+        }
+        return url.request
+    }
+}
+extension Reactive where Base: URLSession {
+    private class RequestDelegate: NSObject, URLSessionDelegate {
+        init(customCredentialData: Data) {
+            
+        }
+        func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+            
+        }
+    }
+    static func request(_ request: URLRequestCovertable)
+        -> Observable<(Data?, URLResponse?)> {
+            return Observable<(Data?, URLResponse?)>.create({ (observer) -> Disposable in
+                let session: URLSession = URLSession(configuration: .default)
+                let task = session.dataTask(with: request.request) { (data, response, error) in
+                    if error != nil {
+                        observer.onError(error!)
+                    } else {
+                        observer.onNext((data, response))
+                        observer.onCompleted()
+                    }
+                }
+                task.resume()
+                return Disposables.create {
+                    task.cancel()
+                }
+            })
+    }
+}
+
+
 enum GitHubUserSearchError: Error {
-    case searchFail, emptyKeyword
+    case searchFail, emptyKeyword, resultError
 }
 
 class GitHubUserSearchViewController: UIViewController {
@@ -27,7 +76,8 @@ class GitHubUserSearchViewController: UIViewController {
             .orEmpty
             .throttle(0.3, scheduler: MainScheduler.instance)
             .distinctUntilChanged()
-            .flatMapLatest({[unowned self] (keyword) -> Observable<[(String, String)]> in
+            .flatMapLatest({
+                [unowned self] (keyword) -> Observable<[(String, String)]> in
                 if keyword.isEmpty {
                     return .just([(String, String)]())
                 }
@@ -37,37 +87,28 @@ class GitHubUserSearchViewController: UIViewController {
                 (index, data, cell) in
                 cell.textLabel?.text = data.0
                 cell.detailTextLabel?.text = data.1
-        }.disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
         // Do any additional setup after loading the view.
     }
     func searchOnGitHub(_ keyword: String) -> Observable<[(String, String)]>{
-        return Observable<[(String, String)]>.create({ (observer) -> Disposable in
-            let session = URLSession(configuration: .default)
-            let url = URL(string: "https://api.github.com/search/users?q=\(keyword)")!
-            let task = session.dataTask(with: url) { (data, response, error) in
-                if error != nil {
-                    observer.onError(error!)
-                } else {
-                    let json = (try! JSONSerialization.jsonObject(with: data!)) as! [String: Any]
-                    if json["errors"] != nil {
-                        observer.onError(GitHubUserSearchError.searchFail)
-                    } else {
-                        let items = json["items"] as! [[String: Any]]
-                        var result = [(String, String)]()
-                        for item in items {
-                            result.append((item["login"] as! String, item["html_url"] as! String))
-                        }
-                        observer.onNext(result)
-                        observer.onCompleted()
-                    }
+        return URLSession.rx.request("https://api.github.com/search/users?q=\(keyword)")
+            .map { (data, _) -> [(String, String)] in
+                guard let data = data,
+                    let json = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any] else {
+                        throw GitHubUserSearchError.resultError
                 }
-            }
-            task.resume()
-            return Disposables.create {
-                print("dosposed", keyword)
-                task.cancel()
-            }
-        })
+                guard json["errors"] == nil else {
+                    throw GitHubUserSearchError.searchFail
+                }
+                guard let items = json["items"] as? [[String: Any]] else {
+                    throw GitHubUserSearchError.resultError
+                }
+                var result = [(String, String)]()
+                for item in items {
+                    result.append((item["login"] as? String ?? "--", item["html_url"] as? String ?? "--"))
+                }
+                return result
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

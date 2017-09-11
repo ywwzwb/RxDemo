@@ -20,7 +20,7 @@ class BasicViewController: UIViewController {
         inputTextField.rx.text.subscribe(onNext: {[unowned self] str in
             self.resultLabel.text = str
         }).disposed(by: disposeBag)
-        inputTextField.rx.text.bindTo(self.resultLabel2.rx.text).disposed(by: disposeBag)
+        inputTextField.rx.text.bind(to:self.resultLabel2.rx.text).disposed(by: disposeBag)
         // Do any additional setup after loading the view.
     }
 
