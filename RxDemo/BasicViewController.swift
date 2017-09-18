@@ -10,34 +10,82 @@ import UIKit
 import RxCocoa
 import RxSwift
 class BasicViewController: UIViewController {
-    @IBOutlet weak var resultLabel: UILabel!
-    @IBOutlet weak var resultLabel2: UILabel!
-    @IBOutlet weak var inputTextField: UITextField!
-    
     let disposeBag = DisposeBag()
+    @IBOutlet weak var output: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        inputTextField.rx.text.subscribe(onNext: {[unowned self] str in
-            self.resultLabel.text = str
-        }).disposed(by: disposeBag)
-        inputTextField.rx.text.bind(to:self.resultLabel2.rx.text).disposed(by: disposeBag)
         // Do any additional setup after loading the view.
     }
-
+    @IBAction func just(_ sender: Any) {
+        Observable.just("Hello, world").subscribe(onNext: { (str) in
+            self.print(str)
+        }).disposed(by: disposeBag)
+    }
+    @IBAction func just2(_ sender: Any) {
+        Observable.just("Hello, world").subscribe { (event) in
+            self.print(event)
+            }.disposed(by: disposeBag)
+    }
+    
+    @IBAction func of(_ sender: Any) {
+        Observable.of("Hello", "world").subscribe { (event) in
+            self.print(event)
+            }.disposed(by: disposeBag)
+    }
+    @IBAction func simpleCreate(_ sender: Any) {
+        Observable<String>.create { (observer) -> Disposable in
+            observer.onNext("Hello, world")
+            observer.onCompleted()
+            return Disposables.create {}
+            }.subscribe { (event) in
+                self.print(event)
+            }.disposed(by: disposeBag)
+    }
+    @IBAction func urlsession(_ sender: Any) {
+        Observable<String?>.create { (observer) -> Disposable in
+            let task = URLSession.shared.dataTask(with: URL(string: "https://httpbin.org/get")!, completionHandler: { (data, _, error) in
+                if error != nil {
+                    observer.onError(error!)
+                } else {
+                    if data == nil {
+                        observer.onNext(nil)
+                    } else {
+                        observer.onNext(String(data: data!, encoding: .utf8))
+                    }
+                    observer.onCompleted()
+                }
+            })
+            task.resume()
+            return Disposables.create {
+                task.cancel()
+            }
+            }.map{ $0 ?? "empty result" }
+            .subscribe { (event) in
+                self.print(event)
+            }.disposed(by: disposeBag)
+    }
+    func print(_ obj: Any) {
+        DispatchQueue.main.async {
+            self.output.text = (self.output.text ?? "") + "\(obj)\n"
+        }
+    }
+    @IBAction func clear(_ sender: Any) {
+        self.output.text = ""
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
