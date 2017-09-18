@@ -71,15 +71,37 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Zd3-8Y-mwa">
+                                <rect key="frame" x="0.0" y="102" width="375" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aEb-jg-nT6">
+                                        <rect key="frame" x="0.0" y="0.0" width="117" height="30"/>
+                                        <state key="normal" title="never"/>
+                                        <connections>
+                                            <action selector="never:" destination="esr-mw-qvg" eventType="touchUpInside" id="raV-8P-hiI"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2UG-b4-xsg">
+                                        <rect key="frame" x="117" y="0.0" width="258" height="30"/>
+                                        <state key="normal" title="never create"/>
+                                        <connections>
+                                            <action selector="neverCreate:" destination="esr-mw-qvg" eventType="touchUpInside" id="jgl-lJ-XsY"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="0I4-9g-Zg7" firstAttribute="top" secondItem="Tyd-Vp-Wnr" secondAttribute="bottom" id="AMr-y1-7zh"/>
+                            <constraint firstItem="Zd3-8Y-mwa" firstAttribute="width" secondItem="KVM-eK-S7A" secondAttribute="width" id="FQQ-gO-lHh"/>
+                            <constraint firstItem="Zd3-8Y-mwa" firstAttribute="leading" secondItem="KVM-eK-S7A" secondAttribute="leading" id="Gae-XT-Ivo"/>
                             <constraint firstItem="KVM-eK-S7A" firstAttribute="top" secondItem="3Hi-ax-fZu" secondAttribute="bottom" constant="8" id="SJx-Fh-emA"/>
                             <constraint firstItem="KVM-eK-S7A" firstAttribute="centerX" secondItem="FrQ-mL-Zem" secondAttribute="centerX" id="Zt8-dy-LEx"/>
                             <constraint firstItem="Tyd-Vp-Wnr" firstAttribute="centerX" secondItem="FrQ-mL-Zem" secondAttribute="centerX" id="bRR-Yz-ZUj"/>
                             <constraint firstItem="KVM-eK-S7A" firstAttribute="width" secondItem="FrQ-mL-Zem" secondAttribute="width" id="flj-BK-MqQ"/>
                             <constraint firstItem="Tyd-Vp-Wnr" firstAttribute="width" secondItem="FrQ-mL-Zem" secondAttribute="width" id="oC9-Zd-6pA"/>
+                            <constraint firstItem="Zd3-8Y-mwa" firstAttribute="top" secondItem="KVM-eK-S7A" secondAttribute="bottom" id="p9P-ZA-gn2"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Basic" id="Rxi-ys-rZe">

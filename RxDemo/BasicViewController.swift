@@ -64,6 +64,19 @@ class BasicViewController: UIViewController {
                 self.print(event)
             }.disposed(by: disposeBag)
     }
+    
+    @IBAction func never(_ sender: Any) {
+        Observable<String>.never().subscribe { (_) in
+            self.print("nerver print")
+        }.disposed(by: disposeBag)
+    }
+    @IBAction func neverCreate(_ sender: Any) {
+        Observable<String>.create({ (observer) -> Disposable in
+            return Disposables.create()
+        }).subscribe { (_) in
+            self.print("nerver print")
+            }.disposed(by: disposeBag)
+    }
     func print(_ obj: Any) {
         DispatchQueue.main.async {
             self.output.text = (self.output.text ?? "") + "\(obj)\n"
